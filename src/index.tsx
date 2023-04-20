@@ -6,8 +6,9 @@
  * @version 1.0.0
  */
 import { NativeModules, Platform } from 'react-native';
-import { methods } from './services/methods';
 import Restart from 'react-native-restart';
+import { methods } from './services/methods';
+export * from './constants';
 const LINKING_ERROR =
   `The package 'react-native-i18n-storage' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
@@ -29,13 +30,13 @@ const I18nStorage = NativeModules.I18nStorage
  * @description Change the native locale of the device and restart the app
  * @param forceRTL {boolean}
  * @param locale {string}
- * @param callback {() => void | Promise<void>}
+ * @param beforeRestart {() => void | Promise<void>}
  * @returns
  */
 export async function ChangeNativeLocale(
   forceRTL: boolean,
   locale: string,
-  callback?: () => void | Promise<void>
+  beforeRestart?: () => void | Promise<void>
 ): Promise<void> {
   if (typeof forceRTL !== 'boolean' || typeof locale !== 'string')
     throw new Error(
@@ -43,7 +44,7 @@ export async function ChangeNativeLocale(
     );
 
   await I18nStorage.ChangeNativeLocale(forceRTL, locale);
-  await callback?.();
+  await beforeRestart?.();
   Restart.Restart();
 }
 
