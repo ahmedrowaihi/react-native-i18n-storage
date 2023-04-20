@@ -18,6 +18,7 @@ import java.util.Locale;
 public class I18nStorageModule extends ReactContextBaseJavaModule {
   public static final String NAME = "I18nStorage";
 
+  public static I18nUtil I18nSharedUtilInstance = null;
   public I18nStorageModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
@@ -30,11 +31,6 @@ public class I18nStorageModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void ChangeNativeLocale(boolean rtl, String locale, Promise promise) {
-    // Set RTL layout
-    I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
-    sharedI18nUtilInstance.allowRTL(getReactApplicationContext(), rtl);
-    sharedI18nUtilInstance.forceRTL(getReactApplicationContext(), rtl);
-
     // Set app language
     Resources resources = getReactApplicationContext().getResources();
     Configuration configuration = resources.getConfiguration();
@@ -48,6 +44,10 @@ public class I18nStorageModule extends ReactContextBaseJavaModule {
     editor.putString("user_language", locale);
     editor.apply();
 
+    // Set RTL layout
+    if(I18nSharedUtilInstance == null) I18nSharedUtilInstance = I18nUtil.getInstance();
+    I18nSharedUtilInstance.allowRTL(getReactApplicationContext(), rtl);
+    I18nSharedUtilInstance.forceRTL(getReactApplicationContext(), rtl);
     promise.resolve(null);
   }
 }
