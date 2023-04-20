@@ -2,19 +2,19 @@ import React from 'react';
 
 import { StyleSheet, View } from 'react-native';
 
-import { ChangeNativeLocale } from 'react-native-i18n-storage';
-import Restart from 'react-native-restart';
+import { ChangeNativeLocale, I18nStorageKey } from 'react-native-i18n-storage';
 import { Credits, Input, TextNoWrap, Toggle, WrappedText } from './components';
 import { isRTL } from './translation';
 import { IsRTL as IsRTLText } from './IsRTL';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 console.log('initial isRTL:', isRTL);
 
 const args: [boolean, string] = isRTL ? [false, 'en'] : [true, 'ar'];
 
 export const onPress = async () => {
-  await ChangeNativeLocale(...args);
-  Restart.Restart();
+  await ChangeNativeLocale(...args, () =>
+    AsyncStorage.setItem(I18nStorageKey, args[1])
+  );
 };
 
 export default function App() {

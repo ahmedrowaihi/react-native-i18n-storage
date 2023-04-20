@@ -9,6 +9,7 @@
     "pods": "pod-install --quiet"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.18.1",
     "react": "18.2.0",
     "react-native": "0.71.7",
     "react-native-restart": "^0.0.27"
