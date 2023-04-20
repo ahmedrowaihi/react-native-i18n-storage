@@ -42,7 +42,7 @@ export async function ChangeNativeLocale(
       'ChangeNativeLocale requires a boolean and a string, ie: ChangeNativeLocale(false, "en-US")'
     );
 
-  await I18nStorage.changeNativeLocale(forceRTL, locale);
+  await I18nStorage.ChangeNativeLocale(forceRTL, locale);
   await callback?.();
   Restart.Restart();
 }
