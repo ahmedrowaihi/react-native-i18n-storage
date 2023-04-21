@@ -1,18 +1,20 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { I18nStorageKey } from '../constants';
+import { I18nStorageSchema } from 'src/types';
 export const AndroidMethods = {
   /**
    * @function Get a value from storage
    * @description Get a value from storage
-   * @returns {Promise<string | null>}
+   * @returns {Promise<I18nStorageSchema | undefined>}
    */
-  async get(): Promise<string | null> {
+  async get(): Promise<I18nStorageSchema | undefined> {
     try {
-      const value = await AsyncStorage.getItem(I18nStorageKey);
-      return value || null;
+      const i18nAsyncStorage = await AsyncStorage.getItem(I18nStorageKey);
+      if (!i18nAsyncStorage) return undefined;
+      return JSON.parse(i18nAsyncStorage);
     } catch (error) {
       console.error(error);
-      return null;
+      return undefined;
     }
   },
   /**
