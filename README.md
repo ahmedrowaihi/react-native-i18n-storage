@@ -28,15 +28,15 @@ Which means that you can change the locale from native side and the app will res
 if you have not installed them yet, you can install them by running the following commands:
 
 ```sh
-// you can use yarn instead of npm
-npm install @react-native-async-storage/async-storage react-native-restart
+// you can use npm instead of yarn
+yarn add @react-native-async-storage/async-storage react-native-restart
 ```
 
 ## Installation
 
 ```sh
-// you can use yarn instead of npm
-npm install react-native-i18n-storage
+// you can use npm instead of yarn
+yarn add @ahmedrowaihi/react-native-i18n-storage
 ```
 
 ## Setup
