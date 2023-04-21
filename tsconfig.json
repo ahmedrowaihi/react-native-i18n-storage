@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-i18n-storage": ["./src/index"]
+      "@ahmedrowaihi/react-native-i18n-storage": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
