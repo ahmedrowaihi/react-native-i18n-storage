@@ -7,6 +7,7 @@
 #import <React/RCTBridgeModule.h>
 
 @interface I18nStorage : NSObject <RCTBridgeModule>
+- (void)SyncWithStorage;
 #endif
 
 @end
