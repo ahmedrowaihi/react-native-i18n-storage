@@ -1,11 +1,18 @@
 #import "AppDelegate.h"
 
+#import <I18nStorage.h>
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // ======== React Native I18nStorage ========
+  // Initialize the I18nStorage module.
+  I18nStorage *i18nStorage = [[I18nStorage alloc] init]; // <- initialize the module
+  [i18nStorage SyncWithStorage]; // <- call the SyncWithStorage method
+  // =========================================
+
   self.moduleName = @"I18nStorageExample";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
