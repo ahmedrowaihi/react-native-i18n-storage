@@ -1,6 +1,6 @@
 {
   "name": "@ahmedrowaihi/react-native-i18n-storage",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "React Native I18n Storage is a simple library to manage your app's I18nManager settings and language by keeping them in sync with local storage from the initial native app launch!.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
