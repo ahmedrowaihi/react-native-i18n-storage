@@ -1,20 +1,22 @@
 import { Settings } from 'react-native';
 import { I18nStorageKey } from '../constants';
+import { I18nStorageSchema } from 'src/types';
 export const iosMethods = {
   /**
    * @function Get a value from storage
    * @description Get a value from storage
-   * @returns {Promise<string | null>}
+   * @returns {Promise<I18nStorageSchema | undefined>}
    */
-  async get(): Promise<string | null> {
+  async get(): Promise<I18nStorageSchema | undefined> {
     return await new Promise((resolve, reject) => {
-      let value = null;
+      let value;
       try {
-        value = Settings.get(I18nStorageKey);
+        const i18nSettings = Settings.get(JSON.parse(I18nStorageKey));
+        value = i18nSettings ? i18nSettings : undefined;
         resolve(value);
       } catch (error) {
         console.error(error);
-        value = null;
+        value = undefined;
         reject(value);
       }
     });

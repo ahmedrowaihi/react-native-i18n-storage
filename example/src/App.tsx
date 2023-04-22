@@ -1,29 +1,32 @@
 import React from 'react';
 
-import { Platform, Settings, StyleSheet, View } from 'react-native';
-
+import { StyleSheet, View } from 'react-native';
 import {
-  ChangeNativeLocale,
-  I18nStorageKey,
+  resetI18nStorage,
+  setI18nStorage,
 } from '@ahmedrowaihi/react-native-i18n-storage';
-
+import { IsRTL as IsRTLText } from './IsRTL';
 import { Credits, Input, TextNoWrap, Toggle, WrappedText } from './components';
 import { isRTL } from './translation';
-import { IsRTL as IsRTLText } from './IsRTL';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Reset } from './components/Reset';
 console.log('initial isRTL:', isRTL);
 
-const args: [boolean, string] = isRTL ? [false, 'en'] : [true, 'ar'];
+const props = isRTL
+  ? {
+      forceRTL: false,
+      allowRTL: false,
+      doLeftAndRightSwapInRTL: false,
+      locale: 'en',
+    }
+  : {
+      forceRTL: true,
+      allowRTL: true,
+      doLeftAndRightSwapInRTL: true,
+      locale: 'ar',
+    };
 
-export const onPress = async () => {
-  await ChangeNativeLocale(...args, () => {
-    if (Platform.OS === 'ios')
-      Settings.set({
-        [I18nStorageKey]: args[1],
-      });
-    else AsyncStorage.setItem(I18nStorageKey, args[1]);
-  });
-};
+export const toggle = async () => await setI18nStorage(props);
+export const reset = async () => await resetI18nStorage();
 
 export default function App() {
   return (
@@ -34,6 +37,7 @@ export default function App() {
         <WrappedText />
         <Input />
         <Toggle />
+        <Reset />
       </View>
       <Credits />
     </View>
