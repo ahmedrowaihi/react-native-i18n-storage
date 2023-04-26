@@ -8,6 +8,8 @@
 
 @interface I18nStorage : NSObject <RCTBridgeModule>
 - (void)SyncWithStorage;
+- (void)setOrReset:(NSString *)settings;
+
 #endif
 
 @end
