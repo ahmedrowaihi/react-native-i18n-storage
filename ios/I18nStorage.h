@@ -7,7 +7,9 @@
 #import <React/RCTBridgeModule.h>
 
 @interface I18nStorage : NSObject <RCTBridgeModule>
-- (void)SyncWithStorage;
+- (void)SyncI18nStorage;
+- (void)setOrReset:(NSString *)settings;
+
 #endif
 
 @end

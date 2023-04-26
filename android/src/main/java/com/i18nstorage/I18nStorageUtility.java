@@ -19,7 +19,6 @@ public class I18nStorageUtility {
   public static final String KEY = "REACT_NATIVE_I18N_STORAGE_KEY_v1";
   public static I18nUtil I18nSharedUtilInstance = null;
   public static void SyncI18nStorage(Context context) {
-    if(I18nSharedUtilInstance == null ) I18nSharedUtilInstance = I18nUtil.getInstance();
     try {
       String settings = AsyncLocalStorageUtil.getItemImpl(
         ReactDatabaseSupplier.getInstance(context).get(),
@@ -31,7 +30,8 @@ public class I18nStorageUtility {
     String locale;
     boolean forceRTL, allowRTL, doLeftAndRightSwapInRTL;
     try {
-      if(settings == null){
+      if(settings == null || settings.equals("{}")
+      ){
         Locale defaultLocale = Locale.getDefault();
         locale= defaultLocale.toString();
         forceRTL = TextUtilsCompat.getLayoutDirectionFromLocale(defaultLocale) == 1;
