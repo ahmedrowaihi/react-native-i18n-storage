@@ -30,7 +30,8 @@ public class I18nStorageUtility {
     String locale;
     boolean forceRTL, allowRTL, doLeftAndRightSwapInRTL;
     try {
-      if(settings == null){
+      if(settings == null || settings.equals("{}")
+      ){
         Locale defaultLocale = Locale.getDefault();
         locale= defaultLocale.toString();
         forceRTL = TextUtilsCompat.getLayoutDirectionFromLocale(defaultLocale) == 1;
