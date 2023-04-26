@@ -9,7 +9,7 @@ RCT_EXPORT_MODULE()
     NSString *key = @"REACT_NATIVE_I18N_STORAGE_KEY_v1";
     @try {
         NSString *settings = [[NSUserDefaults standardUserDefaults] stringForKey:key];
-        if (settings) [self setOrReset:settings];
+        [self setOrReset:settings];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception: %@", exception);
@@ -17,8 +17,9 @@ RCT_EXPORT_MODULE()
     }
 }
 
-- (void)setOrReset:(NSString *)settings {
-    // Parse the settings string into a dictionary
+- (void)setOrReset:(nullable NSString *)settings {
+    settings = settings ?: @"{}";
+
     NSError *error;
     NSData *data = [settings dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *settingsDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -29,32 +30,42 @@ RCT_EXPORT_MODULE()
 
     // Extract the properties from the dictionary
     NSString *locale = settingsDict[@"locale"];
-    BOOL forceRTL = [settingsDict[@"forceRTL"] boolValue];
-    BOOL allowRTL = [settingsDict[@"allowRTL"] boolValue];
-    BOOL doLeftAndRightSwapInRTL = [settingsDict[@"doLeftAndRightSwapInRTL"] boolValue];
+    NSNumber *forceRTL = settingsDict[@"forceRTL"];
+    NSNumber *allowRTL = settingsDict[@"allowRTL"];
+    NSNumber *doLeftAndRightSwapInRTL = settingsDict[@"doLeftAndRightSwapInRTL"];
 
-    // Set the app language based on the locale
+    // Set the app language based on the system locale or the original language
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *preferredLanguages = [NSLocale preferredLanguages];
-    NSString *languageCode = locale ?: [preferredLanguages firstObject];
+    NSString *languageCode = [preferredLanguages firstObject];
+    NSDictionary *originalSettings = [defaults objectForKey:@"originalSettings"];
+    if (originalSettings == nil) {
+        originalSettings = @{
+            @"languageCode": languageCode,
+            @"forceRTL": @(NO),
+            @"allowRTL": @(YES),
+            @"doLeftAndRightSwapInRTL": @(YES)
+        };
+        [defaults setObject:originalSettings forKey:@"originalSettings"];
+    } else if (settingsDict.count == 0) {
+        languageCode = originalSettings[@"languageCode"];
+    }
     [defaults setObject:@[languageCode] forKey:@"AppleLanguages"];
     [defaults synchronize];
 
-    if (locale) {
-        // Set the app locale based on the locale
-        NSLocale *localeObj = [[NSLocale alloc] initWithLocaleIdentifier:locale];
-        [defaults setObject:localeObj.localeIdentifier forKey:@"AppleLocale"];
-        [defaults synchronize];
-    } else {
-        // Set the app locale to system locale
-        [defaults setObject:nil forKey:@"AppleLocale"];
-        [defaults synchronize];
-    }
+    // Set the app locale based on the system locale or the value of the "locale" key
+    NSLocale *localeObj = [NSLocale autoupdatingCurrentLocale];
+    NSString *localeIdentifier = locale ?: localeObj.localeIdentifier;
+    [defaults setObject:localeIdentifier forKey:@"AppleLocale"];
+    [defaults synchronize];
 
-    // Set the app's RTL layout based on the forceRTL and allowRTL properties
-    [[RCTI18nUtil sharedInstance] allowRTL:allowRTL];
-    [[RCTI18nUtil sharedInstance] forceRTL:forceRTL];
-    [[RCTI18nUtil sharedInstance] swapLeftAndRightInRTL:doLeftAndRightSwapInRTL];
+    // Set the app directionality based on the value of the "forceRTL" key or the original settings
+    BOOL shouldForceRTL = forceRTL ? [forceRTL boolValue] : [originalSettings[@"forceRTL"] boolValue];
+    [[RCTI18nUtil sharedInstance] forceRTL:shouldForceRTL];
+    BOOL shouldAllowRTL = allowRTL ? [allowRTL boolValue] : [originalSettings[@"allowRTL"] boolValue];
+    [[RCTI18nUtil sharedInstance] allowRTL:shouldAllowRTL];
+    BOOL shouldSwapLeftAndRight = doLeftAndRightSwapInRTL ? [doLeftAndRightSwapInRTL boolValue] : [originalSettings[@"doLeftAndRightSwapInRTL"] boolValue];
+    [[RCTI18nUtil sharedInstance] swapLeftAndRightInRTL:shouldSwapLeftAndRight];
 }
 
 RCT_EXPORT_METHOD(setI18nStorage:(NSString *)settings withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
