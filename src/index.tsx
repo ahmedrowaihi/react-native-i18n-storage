@@ -47,12 +47,13 @@ export async function getI18nStorage(): Promise<I18nStorageSchema | undefined> {
  * @returns {Promise<void>}
  */
 export async function resetI18nStorage(
-  callback?: () => void | Promise<void>,
+  beforeRestart?: () => void | Promise<void>,
   restart: boolean = true
 ): Promise<void> {
   try {
+    await I18nStorage.setI18nStorage('{}');
     await methods.reset();
-    await callback?.();
+    await beforeRestart?.();
     if (restart) Restart.Restart();
   } catch (error) {
     console.log(error);
