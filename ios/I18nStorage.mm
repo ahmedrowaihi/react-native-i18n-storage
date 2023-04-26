@@ -5,10 +5,9 @@
 
 RCT_EXPORT_MODULE()
 
-- (void)SyncWithStorage {
+- (void)SyncI18nStorage {
+    NSString *key = @"REACT_NATIVE_I18N_STORAGE_KEY_v1";
     @try {
-        // set key variable
-        NSString *key = @"REACT_NATIVE_I18N_STORAGE_KEY_v1";
         NSString *settings = [[NSUserDefaults standardUserDefaults] stringForKey:key];
         if (settings) [self setOrReset:settings];
     }
@@ -58,18 +57,19 @@ RCT_EXPORT_MODULE()
     [[RCTI18nUtil sharedInstance] swapLeftAndRightInRTL:doLeftAndRightSwapInRTL];
 }
 
-RCT_EXPORT_METHOD(ChangeNativeLocale:(NSString *)settings withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
+RCT_EXPORT_METHOD(setI18nStorage:(NSString *)settings withResolver:(RCTPromiseResolveBlock)resolve withRejecter:(RCTPromiseRejectBlock)reject)
 {
     if (settings) {
         @try {
-          [self setOrReset:settings];
-          resolve(nil);
-         }
+            [self setOrReset:settings];
+            resolve(nil);
+        }
         @catch (NSException *exception) {
-          NSLog(@"Exception: %@", exception);
-          reject(@"Exception", exception.description, nil);
-       }
+            NSLog(@"Exception: %@", exception);
+            reject(@"Exception", exception.description, nil);
+        }
     } else {
         resolve(nil);
     }
 }
+@end

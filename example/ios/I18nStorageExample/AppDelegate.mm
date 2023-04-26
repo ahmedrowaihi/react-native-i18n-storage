@@ -10,7 +10,7 @@
   // ======== React Native I18nStorage ========
   // Initialize the I18nStorage module.
   I18nStorage *i18nStorage = [[I18nStorage alloc] init]; // <- initialize the module
-  [i18nStorage SyncWithStorage]; // <- call the SyncWithStorage method
+  [i18nStorage SyncI18nStorage]; // <- call the SyncI18nStorage method
   // =========================================
 
   self.moduleName = @"I18nStorageExample";
