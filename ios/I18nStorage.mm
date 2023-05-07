@@ -34,10 +34,10 @@ RCT_EXPORT_MODULE()
     NSNumber *allowRTL = settingsDict[@"allowRTL"];
     NSNumber *doLeftAndRightSwapInRTL = settingsDict[@"doLeftAndRightSwapInRTL"];
 
-    // Set the app language based on the system locale or the original language
+    // Set the app language based on the "locale" key or the system locale
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *preferredLanguages = [NSLocale preferredLanguages];
-    NSString *languageCode = [preferredLanguages firstObject];
+    NSString *languageCode = settingsDict[@"locale"] ?: [preferredLanguages firstObject]; // <-- Use the value of the "locale" key in the settings dictionary if it exists, otherwise use the system locale
     NSDictionary *originalSettings = [defaults objectForKey:@"originalSettings"];
     if (originalSettings == nil) {
         originalSettings = @{
@@ -53,7 +53,7 @@ RCT_EXPORT_MODULE()
     [defaults setObject:@[languageCode] forKey:@"AppleLanguages"];
     [defaults synchronize];
 
-    // Set the app locale based on the system locale or the value of the "locale" key
+    // Set the app locale based on the "locale" key or the system locale
     NSLocale *localeObj = [NSLocale autoupdatingCurrentLocale];
     NSString *localeIdentifier = locale ?: localeObj.localeIdentifier;
     [defaults setObject:localeIdentifier forKey:@"AppleLocale"];
