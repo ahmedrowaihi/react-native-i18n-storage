@@ -1,5 +1,7 @@
 # react-native-i18n-storage
 
+[![StandWithPalestine](https://raw.githubusercontent.com/TheBSD/StandWithPalestine/main/badges/StandWithPalestine.svg)](https://www.youtube.com/watch?v=ter3AWaft1w)
+
 Sync your I18n Manager from Native Side Without hassle!
 
 ## Why?
