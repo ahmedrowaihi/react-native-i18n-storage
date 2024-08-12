@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import sharedprefernces from 'react-native-shared-preferences';
 import { I18nStorageKey } from '../constants';
 import { I18nStorageSchema } from 'src/types';
 export const AndroidMethods = {
@@ -9,7 +9,9 @@ export const AndroidMethods = {
    */
   async get(): Promise<I18nStorageSchema | undefined> {
     try {
-      const i18nAsyncStorage = await AsyncStorage.getItem(I18nStorageKey);
+      const i18nAsyncStorage = await new Promise<string | null>((resolve) => {
+        sharedprefernces.getItem(I18nStorageKey, (value) => resolve(value));
+      });
       if (!i18nAsyncStorage) return undefined;
       return JSON.parse(i18nAsyncStorage);
     } catch (error) {
@@ -25,7 +27,12 @@ export const AndroidMethods = {
    */
   async set(value: string): Promise<void> {
     try {
-      return await AsyncStorage.setItem(I18nStorageKey, value);
+      const i18nStorage = JSON.stringify(value);
+      await new Promise<void>((resolve) => {
+        sharedprefernces.setItem(I18nStorageKey, i18nStorage);
+        resolve();
+      });
+      return;
     } catch (error) {
       console.error(error);
     }
@@ -38,7 +45,7 @@ export const AndroidMethods = {
    */
   async reset(): Promise<boolean> {
     try {
-      await AsyncStorage.removeItem(I18nStorageKey);
+      await sharedprefernces.removeItem(I18nStorageKey);
       return true;
     } catch (error) {
       console.error(error);

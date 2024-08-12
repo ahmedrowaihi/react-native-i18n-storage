@@ -9,20 +9,17 @@ import android.preference.PreferenceManager;
 import androidx.core.text.TextUtilsCompat;
 
 import com.facebook.react.modules.i18nmanager.I18nUtil;
-import com.reactnativecommunity.asyncstorage.AsyncLocalStorageUtil;
-import com.reactnativecommunity.asyncstorage.ReactDatabaseSupplier;
-
+import android.content.SharedPreferences;
 import java.util.Locale;
 
 import org.json.JSONObject;
 public class I18nStorageUtility {
-  public static final String KEY = "REACT_NATIVE_I18N_STORAGE_KEY_v1";
+  public static final String KEY = "@ahmedrowaihi.i18nstorage";
   public static I18nUtil I18nSharedUtilInstance = null;
   public static void SyncI18nStorage(Context context) {
     try {
-      String settings = AsyncLocalStorageUtil.getItemImpl(
-        ReactDatabaseSupplier.getInstance(context).get(),
-        KEY);
+      SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+      String settings = preferences.getString(KEY, "{}");
       setOrReset(context, settings);
     } catch (Exception ignored) {}
   }

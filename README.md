@@ -24,14 +24,14 @@ Which means that you can change the locale from native side and the app will res
 
 ## Prerequisites
 
-- [@react-native-async-storage/async-storage](https://www.npmjs.com/package/@react-native-async-storage/async-storage)
+- [react-native-shared-preferences](https://www.npmjs.com/package/react-native-shared-preferences)
 - [react-native-restart](https://www.npmjs.com/package/react-native-restart)
 
 if you have not installed them yet, you can install them by running the following commands:
 
 ```sh
 // you can use npm instead of yarn
-yarn add @react-native-async-storage/async-storage react-native-restart
+yarn add react-native-shared-preferences react-native-restart
 ```
 
 ## Installation
@@ -66,7 +66,7 @@ yarn add @ahmedrowaihi/react-native-i18n-storage
 
 ### Android
 
-#### 1. import package to your `MainApplication.java`
+#### 1. import package to your `MainApplication.java` or `MainApplication.kt`:
 
 ```java
 // android/app/src/main/java/com/your-app-name/MainApplication.java
@@ -155,7 +155,7 @@ await resetI18nStorage(
 - [x] Add/Fix JavaScript Methods
 - [x] Refactor Native Code + JavaScript Code
 - [x] Write docs
-- [ ] Write tests
+- [x] Add Example
 
 ## Contributing
 
@@ -165,12 +165,6 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 
 MIT
 
-```
+## Author
 
-```
-
-development workflow.
-
-## License
-
-MIT
+[@ahmedrowaihi](https://github.com/ahmedrowaihi)

@@ -55,7 +55,6 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.2.2",
-    "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
@@ -73,6 +72,7 @@
     "react-native": "0.71.7",
     "react-native-builder-bob": "^0.20.0",
     "react-native-restart": "^0.0.27",
+    "react-native-shared-preferences": "^1.0.2",
     "release-it": "^15.0.0",
     "typescript": "^4.5.2"
   },
@@ -81,12 +81,12 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-shared-preferences": "*"
   },
   "engines": {
     "node": ">= 16.0.0"
   },
-  "packageManager": "^yarn@1.22.15",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -159,6 +159,5 @@
         }
       ]
     ]
-  },
-  "dependencies": {}
+  }
 }
