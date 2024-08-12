@@ -6,7 +6,7 @@
 RCT_EXPORT_MODULE()
 
 - (void)SyncI18nStorage {
-    NSString *key = @"REACT_NATIVE_I18N_STORAGE_KEY_v1";
+    NSString *key = @"ahmedrowaihi.i18nstorage";
     @try {
         NSString *settings = [[NSUserDefaults standardUserDefaults] stringForKey:key];
         [self setOrReset:settings];

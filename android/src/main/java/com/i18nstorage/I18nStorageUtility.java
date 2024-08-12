@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import org.json.JSONObject;
 public class I18nStorageUtility {
-  public static final String KEY = "@ahmedrowaihi.i18nstorage";
+  public static final String KEY = "ahmedrowaihi.i18nstorage";
   public static I18nUtil I18nSharedUtilInstance = null;
   public static void SyncI18nStorage(Context context) {
     try {
