@@ -1,5 +1,5 @@
 {
-  "name": "I18nStorageExample",
+  "name": "example",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,7 +9,6 @@
     "pods": "pod-install --quiet"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.18.1",
     "react": "18.2.0",
     "react-native": "0.71.7",
     "react-native-restart": "^0.0.27"
